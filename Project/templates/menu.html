@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Menu - Daily Haven{% endblock %}
+
+{% block content %}
+<section id="menu">
+    <div class="wrap">
+        <div class="section-head">
+            <div>
+                <span class="eyebrow">The Menu</span>
+                <h2>Simple, seasonal, made to slow down for.</h2>
+            </div>
+        </div>
+        {# Categories come from the item data itself so the buttons and the
+           groups can never drift out of sync. #}
+        {% set categories = menu_items | map(attribute='category') | unique | list %}
+        <div class="menu-cats">
+            {% for category in categories %}
+            <button type="button"
+                    class="menu-cat-btn{% if loop.first %} active{% endif %}"
+                    data-category="{{ category }}"
+                    aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ category }}</button>
+            {% endfor %}
+        </div>
+        <div class="menu-grid">
+            {% for category in categories %}
+            <div class="menu-group" data-category="{{ category }}">
+                <h3>{{ category }}</h3>
+                <p class="group-note">{{ category_notes.get(category, '') }}</p>
+                {% for item in menu_items if item.category == category %}
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">{{ item.name }}</div>
+                        <div class="item-desc">{{ item.description }}</div>
+                    </div>
+                    <div class="item-price">{{ item.price }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

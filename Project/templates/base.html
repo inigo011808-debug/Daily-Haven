@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Daily Haven{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}" defer></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <div class="wrap">
+            <a class="brand" href="{{ url_for('home') }}" aria-label="Daily Haven, back to home"><span class="brand-mark">D</span>Daily Haven</a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('menu') }}">Menu</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('contact') }}" class="nav-cta">Get in touch</a>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages wrap">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <div class="wrap">
+            <span>© 2026 Daily Haven Coffee</span>
+            <span>Made for staying a while.</span>
+        </div>
+    </footer>
+</body>
+</html>

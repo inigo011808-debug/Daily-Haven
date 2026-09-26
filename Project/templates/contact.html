@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - Daily Haven{% endblock %}
+
+{% block content %}
+<section id="contact-teaser">
+    <div class="wrap">
+        <div>
+            <span class="eyebrow">Say hello</span>
+            <h2>Pull up a seat. We'll have the kettle on.</h2>
+            <p>Questions, notes, or a hello are all welcome. Fill in the form and it lands straight in our inbox.</p>
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div class="form-group">
+                    <label for="name">Name*</label>
+                    <input type="text" id="name" name="name" required value="{{ request.form.name if request.form }}">
+                    {% if errors.name %}
+                        <span class="error">{{ errors.name }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required value="{{ request.form.email if request.form }}">
+                    {% if errors.email %}
+                        <span class="error">{{ errors.email }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="message">Message*</label>
+                    <textarea id="message" name="message" required minlength="10">{{ request.form.message if request.form }}</textarea>
+                    {% if errors.message %}
+                        <span class="error">{{ errors.message }}</span>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+
+            {% if success %}
+                <div class="success-message">
+                    <p>Thank you for your message! We'll get back to you soon.</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="site-credit">
+            <span class="eyebrow">About this project</span>
+            <p>Daily Haven is not a real coffee shop, so there is no address to visit and no hours to keep. It was built by Codeblue as a practice project.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block head %}
+<style>
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 0.95rem;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: 2px solid var(--copper);
+        outline-offset: 2px;
+        border-color: var(--copper);
+    }
+    .error {
+        color: #d32f2f;
+        font-size: 0.85rem;
+        margin-top: 4px;
+        display: block;
+    }
+    .success-message {
+        background: var(--oat-warm);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 28px 26px;
+        margin-top: 24px;
+    }
+    .success-message p {
+        margin: 0;
+        color: var(--espresso);
+    }
+</style>
+{% endblock %}

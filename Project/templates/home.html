@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Daily Haven - Coffee & Conversation{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="wrap">
+        <div>
+            <span class="eyebrow">Coffee, made for staying a while</span>
+            <h1>Good coffee <em>opens</em><br>the conversation.</h1>
+            <p class="lede">Daily Haven is a small, slow coffee shop built around one idea: the best part of your day happens over a warm cup and an unhurried talk. Come sit with us.</p>
+            <div class="hero-ctas">
+                <a href="{{ url_for('menu') }}" class="btn-primary">See the menu</a>
+                <a href="{{ url_for('contact') }}" class="btn-ghost">Say hello →</a>
+            </div>
+        </div>
+        <div class="talk-strip">
+            <span class="eyebrow">Overheard at the counter</span>
+            {# First line is rendered server side so it still reads without JS;
+               main.js picks a random one on load and rotates from there. #}
+            <div class="talk-line" data-overheard>
+                <span class="talk-time">{{ overheard[0].time }}</span>
+                <span class="talk-quote">"{{ overheard[0].quote }}"</span>
+            </div>
+            <script id="overheard-data" type="application/json">{{ overheard | tojson }}</script>
+        </div>
+    </div>
+</section>
+{% endblock %}
